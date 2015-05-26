@@ -1,6 +1,7 @@
 *.pyc
 *.db
 *~
+.*
 
 html/
 htmlcov/
@@ -17,3 +18,4 @@ local/
 
 !.gitignore
 !.travis.yml
+!.editorconfig
