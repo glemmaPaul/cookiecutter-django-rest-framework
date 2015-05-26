@@ -116,4 +116,6 @@ class Production(Common):
         CACHES = values.CacheURLValue(default="memcached://127.0.0.1:11211")
     # END CACHING
 
-    # Your production stuff: Below this line define 3rd party library settings
+    # Django Whitenoise
+    STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+    # End Django Whitenoise

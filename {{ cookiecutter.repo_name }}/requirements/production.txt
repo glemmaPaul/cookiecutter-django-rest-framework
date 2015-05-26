@@ -10,3 +10,6 @@ factory-boy==2.4.1
 
 # Response mocking
 responses==0.3.0
+
+# Static file serving
+whitenoise==1.0.6
