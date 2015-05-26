@@ -1,9 +1,18 @@
 # Minimum Django and REST framework version
-Django>=1.6
+django==1.7.5
 djangorestframework>=2.4.3
 
 # wheel for PyPI installs
 wheel==0.24.0
 
+# Configurations
+django-configurations==0.8
+django-secure==1.0.1
+django-cache-url==0.8.0
+dj-database-url==0.3.0
+
 # MkDocs for documentation previews/deploys
 mkdocs==0.11.1
+
+# Persistence Stores
+psycopg2==2.6

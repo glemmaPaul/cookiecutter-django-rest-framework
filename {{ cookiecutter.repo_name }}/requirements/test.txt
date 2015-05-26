@@ -1,7 +1,8 @@
 -r base.txt
 
 # Test requirements
-pytest-django==2.6
-pytest==2.5.2
-pytest-cov==1.6
+django-nose==1.4
+
+# Code style
 flake8==2.2.2
+

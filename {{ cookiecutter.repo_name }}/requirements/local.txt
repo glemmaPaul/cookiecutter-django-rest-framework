@@ -1,1 +1,8 @@
 -r base.txt
+
+
+# Django Extensions
+django-extensions==1.5.5
+
+# Code style
+flake8==2.2.2

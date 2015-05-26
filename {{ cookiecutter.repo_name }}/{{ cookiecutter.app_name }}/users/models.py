@@ -13,7 +13,7 @@ from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 
 
-class UserManager(BaseUserManager, models.GeoManager):
+class UserManager(BaseUserManager):
 
     def _create_user(self, email, password,
                      is_staff, is_superuser, **extra_fields):
