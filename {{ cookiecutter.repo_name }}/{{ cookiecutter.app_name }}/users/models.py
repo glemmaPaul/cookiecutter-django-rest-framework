@@ -26,7 +26,7 @@ class UserManager(BaseUserManager):
         user = self.model(email=email,
                           is_staff=is_staff, is_active=True,
                           is_superuser=is_superuser, last_login=now,
-                          date_joined=now, **extra_fields)
+                          **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -58,9 +58,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
 
     objects = UserManager()
-
-    def __unicode__(self):
-        return self.email
 
     def get_short_name(self):
         return self.full_name
