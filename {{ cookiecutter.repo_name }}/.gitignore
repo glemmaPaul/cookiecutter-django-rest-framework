@@ -1,7 +1,6 @@
 *.pyc
 *.db
 *~
-.*
 
 html/
 htmlcov/
