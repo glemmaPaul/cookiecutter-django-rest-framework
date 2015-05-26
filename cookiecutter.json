@@ -2,10 +2,11 @@
   "full_name": "Your full name here",
   "email": "you@example.com",
   "github_username": "yourname",
-  "pypi_project_name": "djangorestframework-package",
+  "github_reponame": "",
   "repo_name": "django-rest-framework-package",
   "app_name": "rest_framework_package",
   "project_short_description": "Your project description goes here",
   "year": "2015",
-  "version": "0.1.0"
+  "version": "0.1.0",
+  "heroku_name_prefix": "fueled"
 }

@@ -2,42 +2,43 @@ language: python
 
 sudo: false
 
-env:
-    - TOX_ENV=py27-flake8
-    - TOX_ENV=py27-docs
-    - TOX_ENV=py27-django1.6-drf2.4
-    - TOX_ENV=py27-django1.6-drf3.0
-    - TOX_ENV=py27-django1.6-drf3.1
-    - TOX_ENV=py27-django1.7-drf2.4
-    - TOX_ENV=py27-django1.7-drf3.0
-    - TOX_ENV=py27-django1.7-drf3.1
-    - TOX_ENV=py27-django1.8-drf2.4
-    - TOX_ENV=py27-django1.8-drf3.0
-    - TOX_ENV=py27-django1.8-drf3.1
-    - TOX_ENV=py33-django1.6-drf2.4
-    - TOX_ENV=py33-django1.6-drf3.0
-    - TOX_ENV=py33-django1.6-drf3.1
-    - TOX_ENV=py33-django1.7-drf2.4
-    - TOX_ENV=py33-django1.7-drf3.0
-    - TOX_ENV=py33-django1.7-drf3.1
-    - TOX_ENV=py33-django1.8-drf2.4
-    - TOX_ENV=py33-django1.8-drf3.0
-    - TOX_ENV=py33-django1.8-drf3.1
-    - TOX_ENV=py34-django1.6-drf2.4
-    - TOX_ENV=py34-django1.6-drf3.0
-    - TOX_ENV=py34-django1.6-drf3.1
-    - TOX_ENV=py34-django1.7-drf2.4
-    - TOX_ENV=py34-django1.7-drf3.0
-    - TOX_ENV=py34-django1.7-drf3.1
-    - TOX_ENV=py34-django1.8-drf2.4
-    - TOX_ENV=py34-django1.8-drf3.0
-    - TOX_ENV=py34-django1.8-drf3.1
+python:
+- '2.7'
+addons:
+  postgresql: '9.3'
 
-matrix:
-  fast_finish: true
+services:
+- redis-server
+
+before_script:
+- flake8
+- export DATABASE_URL=postgres://postgres@localhost/{{ cookiecutter.repo_name }}
+- export DJANGO_SECRET=`openssl rand -base64 32`
+- psql -c "CREATE DATABASE {{ cookiecutter.repo_name }};" -U postgres
 
 install:
-  - pip install tox
+- pip install -r requirements/test.txt
 
 script:
-    - tox -e $TOX_ENV
+- cd cheekd; LD_LIBRARY_PATH="$HOME/anaconda/lib" python manage.py test --configuration=Testing
+- cd ../; rm ./miniconda.sh
+
+notifications:
+  email:
+    on_success: change  # [always|never|change]
+    on_failure: always  # [always|never|change]
+deploy:
+  provider: heroku
+  buildpack: python
+  strategy: api
+  api_key:
+    # travis encrypt $(heroku auth:token) --add deploy.api_key
+    secure: <add_heroku_auth_token_here>
+  app:
+    master: {{ cookiecutter.repo_name }}-dev
+    qa: {{ cookiecutter.repo_name }}-qa
+    prod: {{ cookiecutter.repo_name }}-prod
+  on:
+    repo: {{ cookiecutter.github_username }}/{{ cookiecutter.github_reponame }}
+  run:
+    - "python manage.py migrate"
